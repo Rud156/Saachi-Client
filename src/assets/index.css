@@ -1,0 +1,21 @@
+.main-submit-button {
+    display: inline-block;
+    padding: 7px;
+}
+
+.extra-margin-bottom {
+    margin-bottom: 28px;
+}
+
+.extra-margin {
+    padding: 14px 0
+}
+
+.input-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
