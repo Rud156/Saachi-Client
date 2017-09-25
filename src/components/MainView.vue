@@ -10,25 +10,25 @@
                 </v-card-actions>
                 <v-card-title>
                     <div class="text-xs-center" style="width: 100%;">
-                        <div class="display-1 extra-margin">A.S.KARIBASAPPA</div>
+                        <div class="display-1 extra-margin">{{ politicianInfo.name }}</div>
 
                         <v-layout row wrap class="title extra-margin">
-                            <v-flex xs12 sm4 class="extra-margin">Age: 35</v-flex>
-                            <v-flex xs12 sm4 class="extra-margin">Liabilities: Rs. 35,000</v-flex>
-                            <v-flex xs12 sm4 class="extra-margin">Party: SUP</v-flex>
+                            <v-flex xs12 sm4 class="extra-margin">Age: {{ politicianInfo.Age }}</v-flex>
+                            <v-flex xs12 sm4 class="extra-margin">Liabilities: {{ politicianInfo.liabilities }}</v-flex>
+                            <v-flex xs12 sm4 class="extra-margin">Party: {{ politicianInfo.Party }}</v-flex>
                         </v-layout>
 
                         <v-layout row wrap class="title extra-margin">
-                            <v-flex xs12 sm6 class="extra-margin">Location: Jagalur (DAVANAGERE)</v-flex>
-                            <v-flex xs12 sm6 class="extra-margin">Also Known As: Shree.Sangappa</v-flex>
+                            <v-flex xs12 sm6 class="extra-margin">Location: {{ politicianInfo.location }}</v-flex>
+                            <v-flex xs12 sm6 class="extra-margin">Also Known As: {{ politicianInfo['S/o|D/o|W/o'] }}</v-flex>
                         </v-layout>
 
                         <v-layout row wrap class="title extra-margin">
-                            <v-flex xs12>Assets: Rs 3,60,000</v-flex>
+                            <v-flex xs12>Assets: {{ politicianInfo.assets }}</v-flex>
                         </v-layout>
 
                         <v-layout row wrap class="title extra-margin">
-                            <v-flex xs12>Address: Davangere Tq, Gummanoor village</v-flex>
+                            <v-flex xs12>Address: {{ politicianInfo.Address }}</v-flex>
                         </v-layout>
 
                         <v-layout class="title extra-margin" row wrap>
@@ -43,7 +43,7 @@
                             <v-flex xs12 sm6 class="extra-margin">
                                 <div class="title extra-margin">Crimes</div>
                                 <v-list>
-                                    <v-list-tile v-for="(item, index) in crimes" @click="" :key="index">
+                                    <v-list-tile v-for="(item, index) in politicianInfo.crimes" @click="" :key="index">
                                         <v-list-tile-content>
                                             <div class="grey--text text--darken-1 text-xs-center" style="width: 100%">{{ item }}</div>
                                         </v-list-tile-content>
@@ -53,7 +53,7 @@
                             <v-flex xs12 sm6 class="extra-margin">
                                 <div class="extra-margin title">Education</div>
                                 <v-list>
-                                    <v-list-tile v-for="(item, index) in education" @click="" :key="index">
+                                    <v-list-tile v-for="(item, index) in politicianInfo.Education" @click="" :key="index">
                                         <v-list-tile-content>
                                             <div class="grey--text text--darken-1 text-xs-center" style="width: 100%">{{ item }}</div>
                                         </v-list-tile-content>
@@ -81,6 +81,14 @@
             closeModal: {
                 type: Function,
                 required: true
+            },
+            politicianInfo: {
+                type: Object,
+                required: true
+            },
+            politicianSentiment: {
+                type: Object,
+                required: true
             }
         },
         data() {
@@ -107,19 +115,18 @@
                         fontSize: 25
                     }
                 },
-                pieChart: null,
-                education: [
-                    "12th Pass",
-                    " P.U. KMA, ARTS COLLEGE 1981"
-                ],
-                crimes: [
-                    " 1 charges related to Punishment for Defamation (IPC Section-500)"
-                ]
+                pieChart: null
             }
         },
         watch: {
             displayView(updatedValue) {
                 this.displayModal = updatedValue;
+            },
+            politicianSentiment(updatedValue) {
+                this.pieChart.data.datasets[0].data[1] = updatedValue.data.neg;
+                this.pieChart.data.datasets[0].data[0] = updatedValue.data.pos;
+
+                this.pieChart.update();
             }
         },
         mounted() {
