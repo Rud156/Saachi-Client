@@ -1,5 +1,7 @@
 # saachi_client
 
+**Note: This project is no longer maintained!**
+
 > A Vue.js project
 
 ## Build Setup
